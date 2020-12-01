@@ -2,23 +2,22 @@
 // See Copyright Notice and license at the end of inc/crnlib.h
 #pragma once
 
+#include <cstdint>
+
+#ifdef __APPLE__
+#include <sys/types.h>
+#endif
+
 namespace crnlib
 {
-   typedef unsigned char      uint8;
-   typedef signed char        int8;
-   typedef unsigned short     uint16;
-   typedef signed short       int16;
-   typedef unsigned int       uint32;
-   typedef uint32             uint;
-   typedef signed int         int32;
-
-   #ifdef __GNUC__
-      typedef unsigned long long    uint64;
-      typedef long long             int64;
-   #else
-      typedef unsigned __int64      uint64;
-      typedef signed __int64        int64;
-   #endif
+   typedef std::uint8_t uint8;
+   typedef std::int8_t int8;
+   typedef std::uint16_t uint16;
+   typedef std::int16_t int16;
+   typedef std::uint32_t uint32;
+   typedef std::int32_t int32;
+   typedef std::uint64_t uint64;
+   typedef std::int64_t int64;
 
    const uint8  cUINT8_MIN  = 0;
    const uint8  cUINT8_MAX  = 0xFFU;

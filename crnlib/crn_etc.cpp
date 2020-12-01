@@ -7,17 +7,17 @@
 
 namespace crnlib
 {
-   const int g_etc1_inten_tables[cETC1IntenModifierValues][cETC1SelectorValues] = 
-   { 
-      { -8,  -2,   2,   8 }, { -17,  -5,  5,  17 }, { -29,  -9,   9,  29 }, {  -42, -13, 13,  42 }, 
-      { -60, -18, 18,  60 }, { -80, -24, 24,  80 }, { -106, -33, 33, 106 }, { -183, -47, 47, 183 } 
+   const int g_etc1_inten_tables[cETC1IntenModifierValues][cETC1SelectorValues] =
+   {
+      { -8,  -2,   2,   8 }, { -17,  -5,  5,  17 }, { -29,  -9,   9,  29 }, {  -42, -13, 13,  42 },
+      { -60, -18, 18,  60 }, { -80, -24, 24,  80 }, { -106, -33, 33, 106 }, { -183, -47, 47, 183 }
    };
 
    const uint8 g_etc1_to_selector_index[cETC1SelectorValues] = { 2, 3, 1, 0 };
    const uint8 g_selector_index_to_etc1[cETC1SelectorValues] = { 3, 2, 0, 1 };
 
    // [flip][subblock][pixel_index]
-   const etc1_coord2 g_etc1_pixel_coords[2][2][8] = 
+   const etc1_coord2 g_etc1_pixel_coords[2][2][8] =
    {
       {
          {
@@ -30,11 +30,11 @@ namespace crnlib
          }
       },
       {
-         { 
-            { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 },               
-            { 0, 1 }, { 1, 1 }, { 2, 1 }, { 3, 1 } 
+         {
+            { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 },
+            { 0, 1 }, { 1, 1 }, { 2, 1 }, { 3, 1 }
          },
-         { 
+         {
             { 0, 2 }, { 1, 2 }, { 2, 2 }, { 3, 2 },
             { 0, 3 }, { 1, 3 }, { 2, 3 }, { 3, 3 }
          },
@@ -55,7 +55,7 @@ namespace crnlib
    };
 
    // Really only [254][11].
-   static const uint16 g_color8_to_etc_block_config_1_to_254[254][12] = 
+   static const uint16 g_color8_to_etc_block_config_1_to_254[254][12] =
    {
       { 0x021C, 0x0D0D, 0xFFFF }, { 0x0020, 0x0021, 0x0A0B, 0x061F, 0xFFFF }, { 0x0113, 0x0217, 0xFFFF }, { 0x0116, 0x031E,
       0x0B0E, 0x0405, 0xFFFF }, { 0x0022, 0x0204, 0x050A, 0x0023, 0xFFFF }, { 0x0111, 0x0319, 0x0809, 0x170F, 0xFFFF }, {
@@ -174,7 +174,7 @@ namespace crnlib
    {
       return pack_color5(color.r, color.g, color.b, scaled, bias);
    }
-   
+
    uint16 etc1_block::pack_color5(uint r, uint g, uint b, bool scaled, uint bias)
    {
       if (scaled)
@@ -218,7 +218,7 @@ namespace crnlib
    bool etc1_block::unpack_color5(color_quad_u8& result, uint16 packed_color5, uint16 packed_delta3, bool scaled, uint alpha)
    {
       color_quad_i16 dc(unpack_delta3(packed_delta3));
-      
+
       int b = (packed_color5 & 31U) + dc.b;
       int g = ((packed_color5 >> 5U) & 31U) + dc.g;
       int r = ((packed_color5 >> 10U) & 31U) + dc.r;
@@ -252,7 +252,7 @@ namespace crnlib
       b = result.b;
       return success;
    }
-  
+
    uint16 etc1_block::pack_delta3(const color_quad_i16& color)
    {
       return pack_delta3(color.r, color.g, color.b);
@@ -294,7 +294,7 @@ namespace crnlib
    {
       return pack_color4(color.r, color.g, color.b, scaled, bias);
    }
-   
+
    uint16 etc1_block::pack_color4(uint r, uint g, uint b, bool scaled, uint bias)
    {
       if (scaled)
@@ -326,7 +326,7 @@ namespace crnlib
 
       return color_quad_u8(cNoClamp, r, g, b, math::minimum(alpha, 255U));
    }
-   
+
    void etc1_block::unpack_color4(uint& r, uint& g, uint& b, uint16 packed_color4, bool scaled)
    {
       color_quad_u8 c(unpack_color4(packed_color4, scaled, 0));
@@ -357,7 +357,7 @@ namespace crnlib
       const int y3 = pInten_modifer_table[3];
       pDst[3].set(ir + y3, ig + y3, ib + y3);
    }
-   
+
    bool etc1_block::get_diff_subblock_colors(color_quad_u8* pDst, uint16 packed_color5, uint16 packed_delta3, uint table_idx)
    {
       CRNLIB_ASSERT(table_idx < cETC1IntenModifierValues);
@@ -382,7 +382,7 @@ namespace crnlib
 
       return success;
    }
-   
+
    void etc1_block::get_abs_subblock_colors(color_quad_u8* pDst, uint16 packed_color4, uint table_idx)
    {
       CRNLIB_ASSERT(table_idx < cETC1IntenModifierValues);
@@ -390,12 +390,12 @@ namespace crnlib
 
       uint r, g, b;
       unpack_color4(r, g, b, packed_color4, true);
-      
+
       const int ir = static_cast<int>(r), ig = static_cast<int>(g), ib = static_cast<int>(b);
 
       const int y0 = pInten_modifer_table[0];
       pDst[0].set(ir + y0, ig + y0, ib + y0);
-      
+
       const int y1 = pInten_modifer_table[1];
       pDst[1].set(ir + y1, ig + y1, ib + y1);
 
@@ -405,7 +405,7 @@ namespace crnlib
       const int y3 = pInten_modifer_table[3];
       pDst[3].set(ir + y3, ig + y3, ib + y3);
    }
-      
+
    bool unpack_etc1(const etc1_block& block, color_quad_u8 *pDst, bool preserve_alpha)
    {
       const bool diff_flag = block.get_diff_bit();
@@ -422,7 +422,7 @@ namespace crnlib
          const uint16 base_color5 = block.get_base5_color();
          const uint16 delta_color3 = block.get_delta3_color();
          etc1_block::get_diff_subblock_colors(subblock_colors0, base_color5, table_index0);
-            
+
          if (!etc1_block::get_diff_subblock_colors(subblock_colors1, base_color5, delta_color3, table_index1))
             success = false;
       }
@@ -469,7 +469,7 @@ namespace crnlib
             }
          }
       }
-      else 
+      else
       {
          if (flip_flag)
          {
@@ -511,15 +511,15 @@ namespace crnlib
             }
          }
       }
-      
+
       return success;
    }
-      
+
    bool etc1_optimizer::compute()
    {
       const uint n = m_pParams->m_num_src_pixels;
       const int scan_delta_size = m_pParams->m_scan_delta_size;
-      
+
       // Scan through a subset of the 3D lattice centered around the avg block color trying each 3D (555 or 444) lattice point as a potential block color.
       // Each time a better solution is found try to refine the current solution's block color based of the current selectors and intensity table index.
       for (int zdi = 0; zdi < scan_delta_size; zdi++)
@@ -527,7 +527,7 @@ namespace crnlib
          const int zd = m_pParams->m_pScan_deltas[zdi];
          const int mbb = m_bb + zd;
          if (mbb < 0) continue; else if (mbb > m_limit) break;
-         
+
          for (int ydi = 0; ydi < scan_delta_size; ydi++)
          {
             const int yd = m_pParams->m_pScan_deltas[ydi];
@@ -539,7 +539,7 @@ namespace crnlib
                const int xd = m_pParams->m_pScan_deltas[xdi];
                const int mbr = m_br + xd;
                if (mbr < 0) continue; else if (mbr > m_limit) break;
-      
+
                etc1_solution_coordinates coords(mbr, mbg, mbb, 0, m_pParams->m_use_color4);
                if (m_pParams->m_quality == cCRNETCQualitySlow)
                {
@@ -551,7 +551,7 @@ namespace crnlib
                   if (!evaluate_solution_fast(coords, m_trial_solution, &m_best_solution))
                      continue;
                }
-               
+
                // Now we have the input block, the avg. color of the input pixels, a set of trial selector indices, and the block color+intensity index.
                // Now, for each component, attempt to refine the current solution by solving a simple linear equation. For example, for 4 colors:
                // The goal is:
@@ -594,9 +594,9 @@ namespace crnlib
                   const int br1 = math::clamp<int>(static_cast<uint>((m_avg_color[0] - avg_delta_r_f) * m_limit / 255.0f + .5f), 0, m_limit);
                   const int bg1 = math::clamp<int>(static_cast<uint>((m_avg_color[1] - avg_delta_g_f) * m_limit / 255.0f + .5f), 0, m_limit);
                   const int bb1 = math::clamp<int>(static_cast<uint>((m_avg_color[2] - avg_delta_b_f) * m_limit / 255.0f + .5f), 0, m_limit);
-                  
+
                   bool skip = false;
-                  
+
                   if ((mbr == br1) && (mbg == bg1) && (mbb == bb1))
                      skip = true;
                   else if ((br1 == m_best_solution.m_coords.m_unscaled_color.r) && (bg1 == m_best_solution.m_coords.m_unscaled_color.g) && (bb1 == m_best_solution.m_coords.m_unscaled_color.b))
@@ -610,7 +610,7 @@ namespace crnlib
                   etc1_solution_coordinates coords1(br1, bg1, bb1, 0, m_pParams->m_use_color4);
                   if (m_pParams->m_quality == cCRNETCQualitySlow)
                   {
-                     if (!evaluate_solution(coords1, m_trial_solution, &m_best_solution)) 
+                     if (!evaluate_solution(coords1, m_trial_solution, &m_best_solution))
                         break;
                   }
                   else
@@ -630,7 +630,7 @@ namespace crnlib
          m_pResult->m_error = cUINT32_MAX;
          return false;
       }
-      
+
       const uint8* pSelectors = m_best_solution.m_selectors.get_ptr();
 
 #ifdef CRNLIB_BUILD_DEBUG
@@ -642,16 +642,16 @@ namespace crnlib
          uint64 actual_error = 0;
          for (uint i = 0; i < n; i++)
             actual_error += color::elucidian_distance(pSrc_pixels[i], block_colors[pSelectors[i]], false);
-         
+
          CRNLIB_ASSERT(actual_error == m_best_solution.m_error);
       }
-#endif      
-      
+#endif
+
       m_pResult->m_error = m_best_solution.m_error;
 
       m_pResult->m_block_color_unscaled = m_best_solution.m_coords.m_unscaled_color;
       m_pResult->m_block_color4 = m_best_solution.m_coords.m_color4;
-      
+
       m_pResult->m_block_inten_table = m_best_solution.m_coords.m_inten_table;
       memcpy(m_pResult->m_pSelectors, pSelectors, n);
       m_pResult->m_n = n;
@@ -663,7 +663,7 @@ namespace crnlib
    {
       m_pParams = &params;
       m_pResult = &result;
-                  
+
       const uint n = m_pParams->m_num_src_pixels;
 
       m_selectors.resize(n);
@@ -703,11 +703,11 @@ namespace crnlib
          m_pSorted_luma = m_sorted_luma[0].get_ptr();
          if (m_pSorted_luma_indices == m_sorted_luma[0].get_ptr())
             m_pSorted_luma = m_sorted_luma[1].get_ptr();
-      
+
          for (uint i = 0; i < n; i++)
             m_pSorted_luma[i] = m_luma[m_pSorted_luma_indices[i]];
       }
-      
+
       m_best_solution.m_coords.clear();
       m_best_solution.m_valid = false;
       m_best_solution.m_error = cUINT64_MAX;
@@ -728,12 +728,12 @@ namespace crnlib
       }
 
       const color_quad_u8 base_color(coords.get_scaled_color());
-      
+
       const uint n = m_pParams->m_num_src_pixels;
       CRNLIB_ASSERT(trial_solution.m_selectors.size() == n);
-      
+
       trial_solution.m_error = cUINT64_MAX;
-            
+
       for (uint inten_table = 0; inten_table < cETC1IntenModifierValues; inten_table++)
       {
          const int* pInten_table = g_etc1_inten_tables[inten_table];
@@ -744,14 +744,14 @@ namespace crnlib
             const int yd = pInten_table[s];
             block_colors[s].set(base_color.r + yd, base_color.g + yd, base_color.b + yd, 0);
          }
-         
+
          uint64 total_error = 0;
-         
+
          const color_quad_u8* pSrc_pixels = m_pParams->m_pSrc_pixels;
          for (uint c = 0; c < n; c++)
          {
             const color_quad_u8& src_pixel = *pSrc_pixels++;
-            
+
             uint best_selector_index = 0;
             uint best_error = math::square(src_pixel.r - block_colors[0].r) + math::square(src_pixel.g - block_colors[0].g) + math::square(src_pixel.b - block_colors[0].b);
 
@@ -782,7 +782,7 @@ namespace crnlib
             if (total_error >= trial_solution.m_error)
                break;
          }
-         
+
          if (total_error < trial_solution.m_error)
          {
             trial_solution.m_error = total_error;
@@ -855,7 +855,7 @@ namespace crnlib
          {
             if (block_inten[0] > m_pSorted_luma[n - 1])
             {
-               const uint min_error = labs(block_inten[0] - m_pSorted_luma[n - 1]);
+               const uint min_error = block_inten[0] - m_pSorted_luma[n - 1];
                if (min_error >= trial_solution.m_error)
                   continue;
             }
@@ -869,7 +869,7 @@ namespace crnlib
          {
             if (m_pSorted_luma[0] > block_inten[3])
             {
-               const uint min_error = labs(m_pSorted_luma[0] - block_inten[3]);
+               const uint min_error = m_pSorted_luma[0] - block_inten[3];
                if (min_error >= trial_solution.m_error)
                   continue;
             }
@@ -914,7 +914,7 @@ done:
       }
       trial_solution.m_coords.m_unscaled_color = coords.m_unscaled_color;
       trial_solution.m_coords.m_color4 = m_pParams->m_use_color4;
-      
+
       bool success = false;
       if (pBest_solution)
       {
@@ -939,7 +939,7 @@ done:
       {
          uint8 *bp = (uint8 *) block;
          uint8 *dp = (uint8 *) dest;
-         
+
          bp += ch;
          dp += ch;
          memset(err,0,sizeof(err));
@@ -969,7 +969,7 @@ done:
          }
       }
    }
-      
+
    static uint etc1_decode_value(uint diff, uint inten, uint selector, uint packed_c)
    {
       const uint limit = diff ? 32 : 16; limit;
@@ -977,7 +977,7 @@ done:
       int c;
       if (diff)
          c = (packed_c >> 2) | (packed_c << 3);
-      else 
+      else
          c = packed_c | (packed_c << 4);
       c += g_etc1_inten_tables[inten][selector];
       c = math::clamp<int>(c, 0, 255);
@@ -1001,12 +1001,12 @@ done:
                   for (uint packed_c = 0; packed_c < limit; packed_c++)
                   {
                      int v = etc1_decode_value(diff, inten, selector, packed_c);
-                     uint err = labs(v - color);
+                     uint err = v - color;
                      if (err < best_error)
                      {
                         best_error = err;
                         best_packed_c = packed_c;
-                        if (!best_error) 
+                        if (!best_error)
                            break;
                      }
                   }
@@ -1026,7 +1026,7 @@ done:
 
       context, pack_params;
       static uint s_next_comp[4] = { 1, 2, 0, 1 };
-            
+
       uint best_error = cUINT32_MAX, best_i = 0;
       int best_x = 0, best_packed_c1 = 0, best_packed_c2 = 0;
 
@@ -1083,7 +1083,7 @@ found_perfect_match:
       const uint inten = (best_x >> 1) & 7;
 
       block.m_bytes[3] = static_cast<uint8>(((inten | (inten << 3)) << 2) | (diff << 1));
-                        
+
       const uint etc1_selector = g_selector_index_to_etc1[(best_x >> 4) & 3];
       *reinterpret_cast<uint16*>(&block.m_bytes[4]) = (etc1_selector & 2) ? 0xFFFF : 0;
       *reinterpret_cast<uint16*>(&block.m_bytes[6]) = (etc1_selector & 1) ? 0xFFFF : 0;
@@ -1104,11 +1104,11 @@ found_perfect_match:
 
       return best_error;
    }
-      
+
    static uint pack_etc1_block_solid_color_constrained(
-      etc1_optimizer::results& results, 
-      uint num_colors, const uint8 *pColor, 
-      crn_etc1_pack_params& pack_params, 
+      etc1_optimizer::results& results,
+      uint num_colors, const uint8 *pColor,
+      crn_etc1_pack_params& pack_params,
       pack_etc1_block_context& context,
       bool use_diff,
       const color_quad_u8* pBase_color5_unscaled)
@@ -1218,7 +1218,7 @@ found_perfect_match:
       results.m_block_color_unscaled[s_next_comp[best_i]] = static_cast<uint8>(best_packed_c1);
       results.m_block_color_unscaled[s_next_comp[best_i + 1]] = static_cast<uint8>(best_packed_c2);
       results.m_error = best_error;
-      
+
       return best_error;
    }
 
@@ -1232,7 +1232,7 @@ found_perfect_match:
             break;
       if (!r)
          return 16 * pack_etc1_block_solid_color(dst_block, &pSrc_pixels[0].r, pack_params, context);
-      
+
       color_quad_u8 dithered_pixels[16];
       if (pack_params.m_dithering)
       {
@@ -1242,7 +1242,7 @@ found_perfect_match:
 
       uint64 best_error = cUINT64_MAX;
       uint best_flip = false, best_use_color4 = false;
-      
+
       uint8 best_selectors[2][8];
       etc1_optimizer::results best_results[2];
       for (uint i = 0; i < 2; i++)
@@ -1250,16 +1250,16 @@ found_perfect_match:
          best_results[i].m_n = 8;
          best_results[i].m_pSelectors = best_selectors[i];
       }
-      
+
       uint8 selectors[3][8];
       etc1_optimizer::results results[3];
-      
+
       for (uint i = 0; i < 3; i++)
       {
          results[i].m_n = 8;
          results[i].m_pSelectors = selectors[i];
       }
-            
+
       color_quad_u8 subblock_pixels[8];
 
       etc1_optimizer::params params(pack_params);
@@ -1305,7 +1305,7 @@ found_perfect_match:
                   params.m_constrain_against_base_color5 = true;
                   params.m_base_color5 = results[0].m_block_color_unscaled;
                }
-                              
+
                if (params.m_quality == cCRNETCQualitySlow)
                {
                   static const int s_scan_delta_0_to_4[] = { -4, -3, -2, -1, 0, 1, 2, 3, 4 };
@@ -1324,12 +1324,12 @@ found_perfect_match:
                   params.m_scan_delta_size = CRNLIB_ARRAY_SIZE(s_scan_delta_0);
                   params.m_pScan_deltas = s_scan_delta_0;
                }
-               
+
                context.m_optimizer.init(params, results[subblock]);
 
                if (!context.m_optimizer.compute())
                   break;
-                             
+
                // Fairly arbitrary/unrefined thresholds that control how far away to scan for potentially better solutions.
                const uint refinement_error_thresh0 = 3000;
                const uint refinement_error_thresh1 = 6000;
@@ -1360,7 +1360,7 @@ found_perfect_match:
                   if (!context.m_optimizer.compute())
                      break;
                }
-               
+
                if (results[2].m_error < results[subblock].m_error)
                   results[subblock] = results[2];
 
@@ -1377,7 +1377,7 @@ found_perfect_match:
             best_results[1] = results[1];
             best_flip = flip;
             best_use_color4 = use_color4;
-            
+
          } // use_color4
 
       } // flip
@@ -1393,7 +1393,7 @@ found_perfect_match:
             CRNLIB_VERIFY(0);
          }
       }
-           
+
       if (best_use_color4)
       {
          dst_block.m_bytes[0] = static_cast<uint8>(best_results[1].m_block_color_unscaled.r | (best_results[0].m_block_color_unscaled.r << 4));
@@ -1409,15 +1409,15 @@ found_perfect_match:
          dst_block.m_bytes[1] = static_cast<uint8>((best_results[0].m_block_color_unscaled.g << 3) | dg);
          dst_block.m_bytes[2] = static_cast<uint8>((best_results[0].m_block_color_unscaled.b << 3) | db);
       }
-      
+
       dst_block.m_bytes[3] = static_cast<uint8>( (best_results[1].m_block_inten_table << 2) | (best_results[0].m_block_inten_table << 5) | ((~best_use_color4 & 1) << 1) | best_flip );
-      
+
       uint selector0 = 0, selector1 = 0;
       if (best_flip)
       {
          // flipped:
-         // { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 },               
-         // { 0, 1 }, { 1, 1 }, { 2, 1 }, { 3, 1 } 
+         // { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 },
+         // { 0, 1 }, { 1, 1 }, { 2, 1 }, { 3, 1 }
          //
          // { 0, 2 }, { 1, 2 }, { 2, 2 }, { 3, 2 },
          // { 0, 3 }, { 1, 3 }, { 2, 3 }, { 3, 3 }
@@ -1469,7 +1469,7 @@ found_perfect_match:
             }
          }
       }
-                  
+
       dst_block.m_bytes[4] = static_cast<uint8>(selector1 >> 8);
       dst_block.m_bytes[5] = static_cast<uint8>(selector1 & 0xFF);
       dst_block.m_bytes[6] = static_cast<uint8>(selector0 >> 8);

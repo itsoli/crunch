@@ -117,7 +117,7 @@ namespace crnlib
       tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
       return ch;
    }
-#else 
+#else
    inline int crn_getch()
    {
       printf("crn_getch: Unimplemented");
@@ -125,4 +125,3 @@ namespace crnlib
    }
 #endif
 } // namespace crnlib
-

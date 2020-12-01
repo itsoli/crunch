@@ -13,6 +13,8 @@
 #ifndef CRND_INCLUDE_CRND_H
 #define CRND_INCLUDE_CRND_H
 
+#include <cstdint>
+
 // Include crnlib.h (only to bring in some basic CRN-related types).
 #include "crnlib.h"
 
@@ -28,21 +30,14 @@
 // CRN decompression API
 namespace crnd
 {
-   typedef unsigned char      uint8;
-   typedef signed char        int8;
-   typedef unsigned short     uint16;
-   typedef signed short       int16;
-   typedef unsigned int       uint32;
-   typedef uint32             uint32;
-   typedef unsigned int       uint;
-   typedef signed int         int32;
-   #ifdef __GNUC__
-      typedef unsigned long long    uint64;
-      typedef long long             int64;
-   #else
-      typedef unsigned __int64      uint64;
-      typedef signed __int64        int64;
-   #endif
+   typedef std::uint8_t uint8;
+   typedef std::int8_t int8;
+   typedef std::uint16_t uint16;
+   typedef std::int16_t int16;
+   typedef std::uint32_t uint32;
+   typedef std::int32_t int32;
+   typedef std::uint64_t uint64;
+   typedef std::int64_t int64;
 
    // The crnd library assumes all allocation blocks have at least CRND_MIN_ALLOC_ALIGNMENT alignment.
    const uint32 CRND_MIN_ALLOC_ALIGNMENT = sizeof(uint32) * 2U;
@@ -317,11 +312,21 @@ namespace crnd
 #include <stdio.h>
 #ifdef WIN32
 #include <memory.h>
+#elif defined(__APPLE__)
+#include <malloc/malloc.h>
 #else
 #include <malloc.h>
 #endif
 #include <stdarg.h>
 #include <new> // needed for placement new, _msize, _expand
+
+#if !CRNLIB_USE_WIN32_API
+#ifdef __APPLE__
+#define _msize malloc_size
+#else
+#define _msize malloc_usable_size
+#endif
+#endif
 
 #define CRND_RESTRICT __restrict
 
@@ -531,14 +536,12 @@ namespace crnd
    static inline void destruct_array(X* p, uint32 n) { p, n; } };
 
    CRND_DEFINE_BUILT_IN_TYPE(bool)
-   CRND_DEFINE_BUILT_IN_TYPE(char)
-   CRND_DEFINE_BUILT_IN_TYPE(unsigned char)
-   CRND_DEFINE_BUILT_IN_TYPE(short)
-   CRND_DEFINE_BUILT_IN_TYPE(unsigned short)
-   CRND_DEFINE_BUILT_IN_TYPE(int)
-   CRND_DEFINE_BUILT_IN_TYPE(unsigned int)
-   CRND_DEFINE_BUILT_IN_TYPE(long)
-   CRND_DEFINE_BUILT_IN_TYPE(unsigned long)
+   CRND_DEFINE_BUILT_IN_TYPE(int8)
+   CRND_DEFINE_BUILT_IN_TYPE(uint8)
+   CRND_DEFINE_BUILT_IN_TYPE(int16)
+   CRND_DEFINE_BUILT_IN_TYPE(uint16)
+   CRND_DEFINE_BUILT_IN_TYPE(int32)
+   CRND_DEFINE_BUILT_IN_TYPE(uint32)
    CRND_DEFINE_BUILT_IN_TYPE(int64)
    CRND_DEFINE_BUILT_IN_TYPE(uint64)
    CRND_DEFINE_BUILT_IN_TYPE(float)
@@ -2424,11 +2427,7 @@ namespace crnd
 
          if (pActual_size)
          {
-#ifdef WIN32
             *pActual_size = p_new ? ::_msize(p_new) : 0;
-#else
-            *pActual_size = p_new ? malloc_usable_size(p_new) : 0;
-#endif
          }
       }
       else if (!size)
@@ -2460,11 +2459,7 @@ namespace crnd
 
          if (pActual_size)
          {
-#ifdef WIN32
             *pActual_size = ::_msize(p_final_block);
-#else
-            *pActual_size = ::malloc_usable_size(p_final_block);
-#endif
          }
       }
 
@@ -2474,11 +2469,7 @@ namespace crnd
    static size_t crnd_default_msize(void* p, void* pUser_data)
    {
       pUser_data;
-#ifdef WIN32
-      return p ? _msize(p) : 0;
-#else
-      return p ? malloc_usable_size(p) : 0;
-#endif
+      return p ? ::_msize(p) : 0;
    }
 
    static crnd_realloc_func        g_pRealloc = crnd_default_realloc;

@@ -14,6 +14,10 @@
 #include <semaphore.h>
 #include <unistd.h>
 
+#ifdef __APPLE__
+#include "osx_pthread_spinlock_shim.h"
+#endif
+
 namespace crnlib
 {
    // g_number_of_processors defaults to 1. Will be higher on multicore machines.
@@ -258,6 +262,8 @@ namespace crnlib
       {
          CRNLIB_ASSERT(pObject && pMethod);
       }
+
+      virtual ~object_task() {}
 
       void init(T* pObject, object_method_ptr pMethod, uint flags = cObjectTaskFlagDefault)
       {

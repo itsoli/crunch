@@ -898,7 +898,7 @@ namespace crnlib
 
                for (uint i = 0; i < cDXT5SelectorValues; i++)
                {
-                  uint error = labs(values[i] - c[comp_index]); // no need to square
+                  uint error = values[i] - c[comp_index]; // no need to square
 
                   if (error < best_error)
                   {
@@ -1677,7 +1677,3 @@ namespace crnlib
    }
 
 } // namespace crnlib
-
-
-
-
