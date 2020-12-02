@@ -3,14 +3,21 @@
 #include "crn_core.h"
 #include "crn_console.h"
 #include "../inc/crnlib.h"
+#ifdef __APPLE__
+#undef _UUID_T // somewhere this is defined and prevents inclusion of sys/_types/_uuid_t.h
+#include <malloc/malloc.h>
+#else
 #include <malloc.h>
+#endif
 #if CRNLIB_USE_WIN32_API
 #include "crn_winhdr.h"
 #endif
 
 #define CRNLIB_MEM_STATS 0
 
-#if !CRNLIB_USE_WIN32_API
+#ifdef __APPLE__
+#define _msize malloc_size
+#elif !CRNLIB_USE_WIN32_API
 #define _msize malloc_usable_size
 #endif
 

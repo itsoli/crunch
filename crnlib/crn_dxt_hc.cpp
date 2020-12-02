@@ -25,10 +25,10 @@ static uint8 g_tile_map[8][2][2] = {
 
 dxt_hc::dxt_hc()
   : m_num_blocks(0),
+    m_num_alpha_blocks(0),
     m_has_color_blocks(false),
     m_has_etc_color_blocks(false),
     m_has_subblocks(false),
-    m_num_alpha_blocks(0),
     m_main_thread_id(crn_get_current_thread_id()),
     m_canceled(false),
     m_pTask_pool(NULL),
@@ -401,7 +401,7 @@ void dxt_hc::determine_tiles_task(uint64 data, void*) {
             best_encoding = e;
           }
         }
-    
+
         for (uint tile_index = 0, s = best_encoding + 1; s; s >>= 1, tile_index++) {
           tile_details& tile = m_tiles[tile_offset | tile_index];
           uint t = tiles[best_encoding][tile_index];

@@ -11,11 +11,11 @@ Public domain */
 namespace crnlib {
 
 static void* SzAlloc(void* p, size_t size) {
-  p = p;
+  p;
   return MyAlloc(size);
 }
 static void SzFree(void* p, void* address) {
-  p = p;
+  p;
   MyFree(address);
 }
 static ISzAlloc g_Alloc = {SzAlloc, SzFree};

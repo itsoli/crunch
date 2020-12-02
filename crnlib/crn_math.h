@@ -99,11 +99,9 @@ inline T square(T value) {
   return value * value;
 }
 
-inline bool is_power_of_2(uint32 x) {
-  return x && ((x & (x - 1U)) == 0U);
-}
-inline bool is_power_of_2(uint64 x) {
-  return x && ((x & (x - 1U)) == 0U);
+template <typename T>
+inline bool is_power_of_2(T x) {
+  return x && ((x & (x - T(1))) == T(0));
 }
 
 template <typename T>
@@ -273,7 +271,7 @@ inline bool equal_tol(float a, float b, float t) {
 }
 
 inline bool equal_tol(double a, double b, double t) {
-  return fabs(a - b) < ((maximum(fabs(a), fabs(b)) + 1.0f) * t);
+  return fabs(a - b) < ((maximum(fabs(a), fabs(b)) + 1.0) * t);
 }
 }
 

@@ -16,7 +16,7 @@ class timer {
   void stop();
 
   double get_elapsed_secs() const;
-  inline double get_elapsed_ms() const { return get_elapsed_secs() * 1000.0f; }
+  inline double get_elapsed_ms() const { return get_elapsed_secs() * 1000.0; }
   timer_ticks get_elapsed_us() const;
 
   static void init();
@@ -24,7 +24,7 @@ class timer {
   static timer_ticks get_init_ticks();
   static timer_ticks get_ticks();
   static double ticks_to_secs(timer_ticks ticks);
-  static inline double ticks_to_ms(timer_ticks ticks) { return ticks_to_secs(ticks) * 1000.0f; }
+  static inline double ticks_to_ms(timer_ticks ticks) { return ticks_to_secs(ticks) * 1000.0; }
   static inline double get_secs() { return ticks_to_secs(get_ticks()); }
   static inline double get_ms() { return ticks_to_ms(get_ticks()); }
 
@@ -57,7 +57,7 @@ class timed_scope {
 
   inline ~timed_scope() {
     double secs = m_tm.get_elapsed_secs();
-    printf("%s: %f secs, %f ms\n", m_pName, secs, secs * 1000.0f);
+    printf("%s: %f secs, %f ms\n", m_pName, secs, secs * 1000.0);
   }
 };
 

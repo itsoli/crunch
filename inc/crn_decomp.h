@@ -19,11 +19,21 @@
 #include <stdio.h>
 #ifdef WIN32
 #include <memory.h>
+#elif defined(__APPLE__)
+#include <malloc/malloc.h>
 #else
 #include <malloc.h>
 #endif
 #include <stdarg.h>
 #include <new>  // needed for placement new, _msize, _expand
+
+#if !CRNLIB_USE_WIN32_API
+#ifdef __APPLE__
+#define _msize malloc_size
+#else
+#define _msize malloc_usable_size
+#endif
+#endif
 
 #define CRND_RESTRICT __restrict
 
@@ -46,6 +56,7 @@
 
 // File: crnd_types.h
 namespace crnd {
+
 const crn_uint8 cUINT8_MIN = 0;
 const crn_uint8 cUINT8_MAX = 0xFFU;
 const uint16 cUINT16_MIN = 0;
@@ -1923,11 +1934,7 @@ static void* crnd_default_realloc(void* p, size_t size, size_t* pActual_size, bo
     p_new = ::malloc(size);
 
     if (pActual_size) {
-#ifdef WIN32
       *pActual_size = p_new ? ::_msize(p_new) : 0;
-#else
-      *pActual_size = p_new ? malloc_usable_size(p_new) : 0;
-#endif
     }
   } else if (!size) {
     ::free(p);
@@ -1953,11 +1960,7 @@ static void* crnd_default_realloc(void* p, size_t size, size_t* pActual_size, bo
     }
 
     if (pActual_size) {
-#ifdef WIN32
       *pActual_size = ::_msize(p_final_block);
-#else
-      *pActual_size = ::malloc_usable_size(p_final_block);
-#endif
     }
   }
 
@@ -1966,11 +1969,7 @@ static void* crnd_default_realloc(void* p, size_t size, size_t* pActual_size, bo
 
 static size_t crnd_default_msize(void* p, void* pUser_data) {
   pUser_data;
-#ifdef WIN32
-  return p ? _msize(p) : 0;
-#else
-  return p ? malloc_usable_size(p) : 0;
-#endif
+  return p ? ::_msize(p) : 0;
 }
 
 static crnd_realloc_func g_pRealloc = crnd_default_realloc;
@@ -3074,7 +3073,7 @@ class crn_unpacker {
 
   crnd::vector<uint16> m_alpha_endpoints;
   crnd::vector<uint16> m_alpha_selectors;
-  
+
   struct block_buffer_element {
     uint16 endpoint_reference;
     uint16 color_endpoint_index;

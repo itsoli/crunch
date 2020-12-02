@@ -11,9 +11,10 @@
 #define QDXT5_DEBUGGING 0
 
 namespace crnlib {
+
 qdxt5::qdxt5(task_pool& task_pool)
     : m_pTask_pool(&task_pool),
-      m_main_thread_id(0),
+      m_main_thread_id(),
       m_canceled(false),
       m_progress_start(0),
       m_progress_range(100),
@@ -30,7 +31,7 @@ qdxt5::~qdxt5() {
 }
 
 void qdxt5::clear() {
-  m_main_thread_id = 0;
+  m_main_thread_id = {};
   m_num_blocks = 0;
   m_pBlocks = 0;
   m_pDst_elements = NULL;

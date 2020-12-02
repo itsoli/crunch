@@ -28,12 +28,12 @@
 namespace crnlib {
 
 namespace rg_etc1 {
-typedef unsigned char uint8;
-typedef unsigned short uint16;
+
 typedef unsigned int uint;
-typedef unsigned int uint32;
-typedef long long int64;
-typedef unsigned long long uint64;
+typedef std::uint8_t uint8;
+typedef std::uint16_t uint16;
+typedef std::uint32_t uint32;
+typedef std::uint64_t uint64;
 
 const uint32 cUINT32_MAX = 0xFFFFFFFFU;
 const uint64 cUINT64_MAX = 0xFFFFFFFFFFFFFFFFULL;  //0xFFFFFFFFFFFFFFFFui64;
