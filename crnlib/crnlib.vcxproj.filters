@@ -190,9 +190,6 @@
     <ClCompile Include="crn_console.cpp">
       <Filter>Source Files\console</Filter>
     </ClCompile>
-    <ClCompile Include="crn_threading_win32.cpp">
-      <Filter>Source Files\threading</Filter>
-    </ClCompile>
     <ClCompile Include="lzma_7zBuf.cpp">
       <Filter>Source Files\lzmalib</Filter>
     </ClCompile>
@@ -279,6 +276,9 @@
     </ClCompile>
     <ClCompile Include="crn_mipmapped_texture.cpp">
       <Filter>Source Files\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="crn_threading.cpp">
+      <Filter>Source Files\threading</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -493,9 +493,6 @@
       <Filter>Source Files\threading</Filter>
     </ClInclude>
     <ClInclude Include="crn_threading_null.h">
-      <Filter>Source Files\threading</Filter>
-    </ClInclude>
-    <ClInclude Include="crn_threading_win32.h">
       <Filter>Source Files\threading</Filter>
     </ClInclude>
     <ClInclude Include="lzma_7zBuf.h">

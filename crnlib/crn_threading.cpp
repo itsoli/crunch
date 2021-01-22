@@ -1,3 +1,5 @@
+#include "crn_core.h"
+
 #include <algorithm>
 
 #include "crn_threading.h"

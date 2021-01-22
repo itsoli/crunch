@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crunch", "crunch\crunch.2010.vcxproj", "{8F645BA1-B996-49EB-859B-970A671DE05D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crunch", "crunch\crunch.vcxproj", "{8F645BA1-B996-49EB-859B-970A671DE05D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crnlib", "crnlib\crnlib.2010.vcxproj", "{CF2E70E8-7133-4D96-92C7-68BB406C0664}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crnlib", "crnlib\crnlib.vcxproj", "{CF2E70E8-7133-4D96-92C7-68BB406C0664}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

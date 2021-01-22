@@ -4,7 +4,9 @@
 
 #include <cstdint>
 
-#ifdef __APPLE__
+#if defined(WIN32)
+typedef unsigned int uint;
+#elif defined(__APPLE__)
 #include <sys/types.h>
 #endif
 

@@ -1,6 +1,6 @@
 *.o
-*.2010.vcxproj.user
-*.2010.suo
+*.vcxproj.user
+*.suo
 /crnlib/crunch
 /crnlib/Win32
 /crnlib/x64
@@ -15,5 +15,6 @@
 /lib
 /bin/*
 !bin/crunch_x64.exe
+.vs
 .vscode
 .idea

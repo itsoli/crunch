@@ -1,5 +1,5 @@
 crunch/crnlib v1.04 - Advanced DXTn texture compression library
-Copyright (C) 2010-2017 Richard Geldreich, Jr. and Binomial LLC http://binomial.info 
+Copyright (C) 2010-2017 Richard Geldreich, Jr. and Binomial LLC http://binomial.info
 
 For bugs or support contact Binomial <info@binomial.info>.
 
@@ -9,7 +9,7 @@ http://opensource.org/licenses/Zlib
 Portions of this software make use of public domain code originally
 written by Igor Pavlov (LZMA), RYG (crn_ryg_dxt*), and Sean Barrett (stb_image.c).
 
-If you use this software in a product, an acknowledgment in the product 
+If you use this software in a product, an acknowledgment in the product
 documentation would be highly appreciated but is not required.
 
 Note: crunch originally used to live on Google Code: https://code.google.com/p/crunch/
@@ -25,7 +25,7 @@ It can compress mipmapped 2D textures, normal maps, and cubemaps to
 approx. 1-1.25 bits/texel, and normal maps to 1.75-2 bits/texel. The
 actual bitrate depends on the complexity of the texture itself, the
 specified quality factor/target bitrate, and ultimately on the desired
-quality needed for a particular texture. 
+quality needed for a particular texture.
 
 crnlib's differs significantly from other approaches because its
 compressed texture data format was carefully designed to be quickly
@@ -45,7 +45,7 @@ The .CRN file format supports the following core DXTn texture formats:
 DXT1 (but not DXT1A), DXT5, DXT5A, and DXN/3DC
 
 It also supports several popular swizzled variants (several are
-also supported by AMD's Compressonator): 
+also supported by AMD's Compressonator):
 DXT5_XGBR, DXT5_xGxR, DXT5_AGBR, and DXT5_CCxY (experimental luma-chroma YCoCg).
 
 ## Recommended Software
@@ -70,7 +70,7 @@ top-down cluster analysis, vector quantization (VQ) of the selector
 indices, and several custom algorithms for compressing the resulting
 endpoint/selector codebooks and macroblock indices. Multiple feedback
 passes are performed between the clusterization and VQ steps to optimize
-quality, and several steps use a brute force refinement approach to improve 
+quality, and several steps use a brute force refinement approach to improve
 quality. The majority of compression steps are multithreaded.
 
 The .CRN format currently utilizes canonical Huffman coding for speed
@@ -128,7 +128,7 @@ the resulting compression ratio and quality is superior vs. clustered .DDS files
 
 crnlib and crunch can read/write the .KTX file format in various pixel formats.
 Rate distortion optimization (clustered DXTc compression) is not yet supported
-when writing .KTX files. 
+when writing .KTX files.
 
 The .KTX file format is just like .DDS, except it's a fairly well specified
 standard created by the Khronos Group. Unfortunately, almost all of the tools I've
@@ -141,7 +141,7 @@ be reliably read by other tools.
 This release contains the source code and projects for three simple
 example projects:
 
-crn_examples.2010.sln is a Visual Studio 2010 (VC10) solution file
+crn_examples.sln is a Visual Studio 2019 (VC10) solution file
 containing projects for Win32 and x64. crnlib itself also builds with
 VS2005, VS2008, and gcc 4.5.0 (TDM GCC+MinGW).  A codeblocks 10.05
 workspace and project file is also included, but compiling crnlib this

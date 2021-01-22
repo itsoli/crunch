@@ -45,41 +45,49 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DLL|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_DLL|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DLL|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -318,6 +326,7 @@
     <ClCompile Include="crn_rand.cpp" />
     <ClCompile Include="crn_hash_map.cpp" />
     <ClCompile Include="crn_sparse_bit_array.cpp" />
+    <ClCompile Include="crn_threading.cpp" />
     <ClCompile Include="crn_value.cpp" />
     <ClCompile Include="crn_vector.cpp" />
     <ClCompile Include="crn_image_utils.cpp" />
@@ -414,7 +423,6 @@
     <ClCompile Include="crn_data_stream.cpp" />
     <ClCompile Include="crn_colorized_console.cpp" />
     <ClCompile Include="crn_console.cpp" />
-    <ClCompile Include="crn_threading_win32.cpp" />
     <ClCompile Include="lzma_7zBuf.cpp" />
     <ClCompile Include="lzma_7zBuf2.cpp" />
     <ClCompile Include="lzma_7zCrc.cpp" />
@@ -517,7 +525,6 @@
     <ClInclude Include="crn_console.h" />
     <ClInclude Include="crn_threading.h" />
     <ClInclude Include="crn_threading_null.h" />
-    <ClInclude Include="crn_threading_win32.h" />
     <ClInclude Include="lzma_7zBuf.h" />
     <ClInclude Include="lzma_7zCrc.h" />
     <ClInclude Include="lzma_7zFile.h" />
